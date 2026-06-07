@@ -47,7 +47,23 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     public function getAuthIdentifierName()
-{
-    return 'Epasts';
-}
+    {
+        return 'Epasts';
+    }
+    /**
+    * Pārbauda, vai lietotājs ir klients
+    */
+    public function isClient(): bool{
+        return \Illuminate\Support\Facades\DB::table('clients')
+            ->where('Lietotāja_id',$this->Lietotāja_id)
+            ->exists();
+    }
+    /**
+    * Pārbauda, vai lietotājs ir treneris
+    */
+    public function isCoach(): bool {
+        return \Illuminate\Support\Facades\DB::table('coaches')
+            ->where('Lietotāja_id', $this->Lietotāja_id)
+            ->exists();
+    }
 }
