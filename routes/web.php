@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Coach\SessionController; // Pievienojam mūsu jauno sesiju kontrolieri
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\CoachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,9 @@ Route::get('/', function () {
 });
 
 // Klientu panelis (un kopējais starta punkts pēc ielogošanās parastam lietotājam)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', 'App\\Http\\Controllers\\Client\\CoachController@index')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // TIKAI TRENERU SADAĻA (Aizsargāta ar auth un mūsu pašu coach middleware)
 Route::middleware(['auth', 'coach'])->group(function () {
