@@ -8,14 +8,14 @@
     <div class="py-12 bg-slate-50">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-sm rounded-2xl shadow-sm flex items-center gap-2">
-                    ✅ {{ session('success') }}
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-sm shadow-sm flex items-center gap-2">
+                    {{ session('success') }}
         </div>
     @endif
 
     @if (session('error'))
-        <div class="mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-800 font-semibold text-sm rounded-2xl shadow-sm flex items-center gap-2">
-            ⚠️ {{ session('error') }}
+        <div class="mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-800 font-semibold text-sm  shadow-sm flex items-center gap-2">
+            {{ session('error') }}
         </div>
     @endif
 
@@ -27,7 +27,7 @@
 
             <div class="bg-white  border border-gray-200 shadow-sm p-6 mb-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
                 <div class="w-32 h-32 bg-slate-100  border border-gray-200 flex items-center justify-center text-4xl shadow-inner shrink-0">
-                    💪
+                    
                 </div>
                 <div class="flex-1 text-center md:text-left">
                     <h1 class="text-2xl font-extrabold text-gray-900 mb-2">{{ $trainer->Vārds }} {{ $trainer->Uzvārds }}</h1>
@@ -43,7 +43,7 @@
             <div class="bg-white  border border-gray-200 shadow-sm p-6 mb-8">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
-                        <h3 class="text-lg font-extrabold text-gray-900 mb-1">📅 Pieteikties treniņam</h3>
+                        <h3 class="text-lg font-extrabold text-gray-900 mb-1"> Pieteikties treniņam</h3>
                         <p class="text-xs text-gray-500">Izvēlies datumu, lai apskatītu pieejamos laikus.</p>
                     </div>
                     
