@@ -70,6 +70,11 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
         Auth::login($user);
     });
+    /** @var \App\Models\User $user */
+    $user = auth()->user();
+    if ($user->isCoach()) {
+        return redirect()->intended('/coach/dashboard');
+    }
 
         return redirect()-> intended('/dashboard');
     }

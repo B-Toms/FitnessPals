@@ -29,7 +29,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // Pasakām VS Code, ka šis ir mūsu User modelis
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        if($user->isCoach()){
+            return redirect()->intended('/coach/dashboard');
+        }
+        return redirect()->intended('/dashboard');
     }
 
     /**
