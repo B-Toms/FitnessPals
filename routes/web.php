@@ -28,6 +28,8 @@ Route::get('/dashboard', 'App\\Http\\Controllers\\Client\\CoachController@index'
 
 Route::get('/trainer/{id}', ['App\\Http\Controllers\\Client\\CoachController', 'show'])->name('trainer.show');
 
+Route::post('/book-session/{id}', [\App\Http\Controllers\Client\BookingController::class, 'store'])->name('bookings.store');
+
 // TIKAI TRENERU SADAĻA (Aizsargāta ar auth un mūsu pašu coach middleware)
 Route::middleware(['auth', 'coach'])->group(function () {
     

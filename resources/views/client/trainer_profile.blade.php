@@ -7,11 +7,22 @@
 
     <div class="py-12 bg-slate-50">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            
+            @if (session('success'))
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-sm rounded-2xl shadow-sm flex items-center gap-2">
+                    ✅ {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-800 font-semibold text-sm rounded-2xl shadow-sm flex items-center gap-2">
+            ⚠️ {{ session('error') }}
+        </div>
+    @endif
+
             <div class="mb-6">
-                <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition gap-1">
-                    ← Atpakaļ uz treneru sarakstu
-                </a>
+            <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition gap-1">
+                ← Atpakaļ uz treneru sarakstu
+            </a>
             </div>
 
             <div class="bg-white  border border-gray-200 shadow-sm p-6 mb-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
