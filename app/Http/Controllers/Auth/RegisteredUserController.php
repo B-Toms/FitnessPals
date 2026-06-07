@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class RegisteredUserController extends Controller
 {
@@ -31,21 +32,45 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        'name' => ['required', 'string', 'max:50'], // Šeit mēs izmantojam 'name' kā vārdu pagaidām
+        'email' => ['required', 'string', 'email', 'max:100', 'unique:'.User::class.',Epasts'],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'role' => ['required', 'string', 'in:client,coach'],
+    ]);
 
+    // Izmantojam transakciju drošībai
+    DB::transaction(function () use ($request) {
+        // 1. Izveidojam pamata lietotāju
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'Vārds' => $request->name,
+            'Uzvārds' => 'Uzvārds', // Pagaidām ieliekam default, vēlāk pielāgosim formu
+            'Epasts' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
+        // 2. Atkarībā no lomas, ierakstām datus saistītajā tabulā
+        if ($request->role === 'client') {
+            DB::table('clients')->insert([
+                'Lietotāja_id' => $user->Lietotāja_id, // Izmantojam mūsu pielāgoto PK lauku
+                'Telefona_numurs' => '-',
+                'Sagatavotibas_līmenis' => 'Iesācējs',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        } elseif ($request->role === 'coach') {
+            DB::table('coaches')->insert([
+                'Lietotāja_id' => $user->Lietotāja_id,
+                'Kvalifikācija' => 'Sertificēts treneris',
+                'Sertifikācijas_dati' => '-',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         event(new Registered($user));
-
         Auth::login($user);
+    });
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()-> intended('/dashboard');
     }
 }

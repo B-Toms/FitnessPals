@@ -17,9 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+    protected $primaryKey = 'Lietotāja_id';
+
     protected $fillable = [
-        'name',
-        'email',
+        'Vārds',
+        'Uzvārds',
+        'Epasts',
         'password',
     ];
 
@@ -42,4 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function getAuthIdentifierName()
+{
+    return 'Epasts';
+}
 }
