@@ -46,9 +46,9 @@
                             </p>
                         </div>
                         <div class="mt-6">
-                            <button class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition">
+                            <a href="{{ route('trainer.show', $trainer->Lietotāja_id) }}" class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition active:scale-95 text-center cursor-pointer">
                                 Skatīt profilu
-                            </button>
+                            </a>
                         </div>
                     </div>
                 @endforeach

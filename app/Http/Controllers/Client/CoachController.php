@@ -32,4 +32,27 @@ class CoachController extends Controller
 
         return view('dashboard', compact('trainers', 'sportTypes'));
     }
+
+    /**
+     * Parāda konkrēta trenera profilu un viņa kalendāru/sesijas
+     */
+    public function show($id)
+    {
+        // 1. Atrodam treneri pēc viņa ID
+        $trainer = DB::table('users')->where('Lietotāja_id', $id)->first();
+
+        if (!$trainer) {
+            abort(404, 'Treneris netika atrasts!');
+        }
+
+        // 2. Paņemam visas šī trenera plānotās sesijas un pievienojam sporta veida nosaukumu
+        $sessions = DB::table('sessions')
+            ->join('sport_types', 'sessions.Sporta_veida_id', '=', 'sport_types.Sporta_veida_id')
+            ->where('sessions.Trenera_id', $id)
+            ->select('sessions.*', 'sport_types.Nosaukums as SportaVeids')
+            ->get();
+
+        // 3. Nosūtām datus uz trenera profila skatu
+        return view('client.trainer_profile', compact('trainer', 'sessions'));
+    }
 }

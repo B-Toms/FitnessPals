@@ -26,6 +26,8 @@ Route::get('/dashboard', 'App\\Http\\Controllers\\Client\\CoachController@index'
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/trainer/{id}', ['App\\Http\Controllers\\Client\\CoachController', 'show'])->name('trainer.show');
+
 // TIKAI TRENERU SADAĻA (Aizsargāta ar auth un mūsu pašu coach middleware)
 Route::middleware(['auth', 'coach'])->group(function () {
     
