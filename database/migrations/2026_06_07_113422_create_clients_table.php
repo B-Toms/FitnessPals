@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id('Lietotāja_id');
-            $table->string('Vārds',50);
-            $table->string('Uzvārds',50);
-            $table->string('Epasts',100)->unique();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('clients', function (Blueprint $table) {
+            $table->foreignid('Lietotāja_id')->primary()->constrained('users','Lietotāja_id')->onDelete('cascade');
+            $table->string('Telefona_numurs',20);
+            $table->string('Sagatavotibas_līmenis',50);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('clients');
     }
 };
