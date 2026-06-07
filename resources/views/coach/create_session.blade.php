@@ -82,4 +82,28 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tipsSelect = document.getElementById('Tips');
+            const maxVietasInput = document.getElementById('Max_dalībnieku_skaits');
+
+            function toggleMaxVietas() {
+                if (tipsSelect.value === 'Individuālais') {
+                    maxVietasInput.value = 1;
+                    maxVietasInput.readOnly = true;
+                    maxVietasInput.classList.add('bg-gray-100', 'cursor-not-allowed');
+                } else {
+                    if (maxVietasInput.value == 1) {
+                        maxVietasInput.value = 10; // Atgriežam noklusēto grupas vērtību
+                    }
+                    maxVietasInput.readOnly = false;
+                    maxVietasInput.classList.remove('bg-gray-100', 'cursor-not-allowed');
+                }
+            }
+
+            // Palaid pārbaudi gan uzreiz ielādējot lapu, gan mainot izvēli
+            tipsSelect.addEventListener('change', toggleMaxVietas);
+            toggleMaxVietas();
+        });
+    </script>
 </x-app-layout>

@@ -15,30 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Sākumlapa (Welcome)
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Klientu panelis (un kopējais starta punkts)
+// Klientu panelis (un kopējais starta punkts pēc ielogošanās parastam lietotājam)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Tikai Treneru sadaļa (Aizsargāta ar auth un mūsu coach middleware)
+// TIKAI TRENERU SADAĻA (Aizsargāta ar auth un mūsu pašu coach middleware)
 Route::middleware(['auth', 'coach'])->group(function () {
     
-    // Trenera galvenais panelis
-    Route::get('/coach/dashboard', function () {
-        return view('coach.dashboard');
-    })->name('coach.dashboard');
+    // Trenera galvenais panelis (datus sagatavo un padod SessionController)
+    Route::get('/coach/dashboard', [SessionController::class, 'index'])->name('coach.dashboard');
 
-    // Jaunie maršruti treniņu sesiju izveidei un saglabāšanai
+    // Maršruti treniņu sesiju izveidei un saglabāšanai datubāzē
     Route::get('/coach/sessions/create', [SessionController::class, 'create'])->name('coach.sessions.create');
     Route::post('/coach/sessions', [SessionController::class, 'store'])->name('coach.sessions.store');
 });
 
-// Profila labošanas maršruti (Breeze noklusējuma)
-
+// PROFILA LABOŠANAS MARŠRUTI (Breeze noklusējuma, pieejami visiem ielogotiem)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

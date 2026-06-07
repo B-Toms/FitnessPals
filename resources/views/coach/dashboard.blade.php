@@ -25,12 +25,44 @@
                         + Izveidot jaunu sesiju
                     </a>
                 </div>
-
-                <div class="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-                    <span class="text-4xl text-gray-300">📅</span>
-                    <p class="mt-4 text-base font-medium text-gray-600">Šeit drīz parādīsies saraksts ar taviem izveidotajiem treniņiem.</p>
-                    <p class="text-xs text-gray-400 mt-1">Izmanto pogu augšā, lai pievienotu pirmo sesiju.</p>
-                </div>
+                @if($sessions->isEmpty())
+                    <div class="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+                        <span class="text-4xl text-gray-300">📅</span>
+                        <p class="mt-4 text-base font-medium text-gray-600">Tu vēl neesi izveidojis nevienu treniņu sesiju.</p>
+                        <p class="text-xs text-gray-400 mt-1">Izmanto pogu augšā, lai pievienotu pirmo sesiju.</p>
+                    </div>
+                @else
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Sporta veids</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Tips</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Datums & Laiks</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Ilgums</th>
+                                    <th class="px-6 py-3 text-left font-semibold text-gray-700 uppercase tracking-wider">Max Vietas</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-100">
+                                @foreach($sessions as $session)
+                                    <tr class="hover:bg-emerald-50/40 transition">
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ $session->Nosaukums }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $session->Tips === 'Individuālais' ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700' }}">
+                                                {{ $session->Tips }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">
+                                            {{ date('d.m.Y', strtotime($session->Datums)) }} plkst. {{ date('H:i', strtotime($session->Laiks)) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">{{ $session->Ilgums }} min</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-600">{{ $session->Max_dalībnieku_skaits }} vietas</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
 
         </div>
