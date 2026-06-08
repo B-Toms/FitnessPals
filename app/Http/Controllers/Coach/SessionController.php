@@ -59,5 +59,72 @@ class SessionController extends Controller
         ]);
         // 3.Pāradresējam atpakal
         return redirect('/coach/dashboard')->with('success','Treniņa sesija veiksmīgi izveidota!');
+
+    }
+    /**
+     * Dzēš konkrētu treniņa sesiju un visas piesaistītās rezervācijas
+     */
+    public function destroy($id)
+    {
+        // Izmantojam transakciju, lai droši izdzēstu datus no abām tabulām
+        \Illuminate\Support\Facades\DB::transaction(function () use ($id) {
+            // 1. Vispirms izdzēšam visas rezervācijas, kas pieteiktas šai sesijai
+        \Illuminate\Support\Facades\DB::table('bookings')->where('Sesijas_id', $id)->delete();
+
+            // 2. Tagad izdzēšam pašu sesiju
+        \Illuminate\Support\Facades\DB::table('sessions')->where('Sesijas_id', $id)->delete();
+        });
+
+        return redirect()->back()->with('success', 'Sesija veiksmīgi izdzēsta!');
+    }
+
+    /**
+     * Parāda sesijas rediģēšanas formu ar sporta veidu sarakstu
+     */
+    public function edit($id)
+    {
+        // 1. Atlasām konkrēto sesiju
+        $session = \Illuminate\Support\Facades\DB::table('sessions')->where('Sesijas_id', $id)->first();
+
+        if (!$session) {
+            return redirect()->route('coach.dashboard')->with('error', 'Sesija netika atrasta!');
+        }
+
+        // 2. Atlasām visus sporta veidus no TAVAS ĪSTĀS tabulas 'sport_types'
+        $sports = \Illuminate\Support\Facades\DB::table('sport_types')->get();
+
+        // 3. Padodam abus mainīgos uz skatu
+        return view('coach.edit_session', compact('session', 'sports'));
+    }
+    /**
+     * Saglabā veiktos labojumus sesijā
+     */
+    public function update(Request $request, $id)
+    {
+        // 1. Validācija, izmantojot precīzos formas laukus
+        $request->validate([
+            'Sporta_veida_id'        => 'required|integer',
+            'Tips'                   => 'required|string|max:20',
+            'Datums'                 => 'required|date',
+            'Laiks'                  => 'required',
+            'Ilgums'                 => 'required|integer',
+            'Max_dalibnieku_skaits'  => 'required|integer|min:0',
+        ]);
+
+        // 2. Ierakstām datus datubāzē precīzajās kolonnās pēc DESCRIBE struktūras
+        \Illuminate\Support\Facades\DB::table('sessions')
+            ->where('Sesijas_id', $id)
+            ->update([
+                'Sporta_veida_id'       => $request->Sporta_veida_id,
+                'Tips'                  => $request->Tips,
+                'Datums'                => $request->Datums,
+                'Laiks'                 => $request->Laiks,
+                'Ilgums'                => $request->Ilgums,
+                'Max_dalībnieku_skaits' => $request->Max_dalibnieku_skaits,
+                'updated_at'            => now()
+            ]);
+
+        // 3. Atgriežamies uz paneli
+        return redirect()->route('coach.dashboard')->with('success', 'Sesijas dati veiksmīgi atjaunināti!');
     }
 }
