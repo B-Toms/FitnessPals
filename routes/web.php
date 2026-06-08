@@ -36,6 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Treniņa rezervācijas veikšana
     Route::post('/book-session/{id}', [BookingController::class, 'store'])->name('bookings.store');
+
+    // Klienta rezervāciju saraksts un atcelšana
+    Route::get('/manas-rezervacijas', [BookingController::class, 'index'])->name('client.bookings.index');
+    Route::delete('/manas-rezervacijas/{id}', [BookingController::class, 'destroy'])->name('client.bookings.destroy');
 });
 
 

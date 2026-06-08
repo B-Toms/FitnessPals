@@ -1,5 +1,6 @@
 {
     "Kalendārs": "Calendar",
+    "Sākums":"Home",
     "Trenera panelis": "Coach Dashboard",
     "Manas rezervācijas": "My Bookings",
     "Profils": "Profile",
@@ -43,5 +44,10 @@
     "Saglabāt sesiju": "Save Session",
     "Rediģēt treniņa sesiju": "Edit Training Session",
     "Atpakaļ uz paneli": "Back to Dashboard",
-    "Saglabāt izmaiņas": "Save Changes"
+    "Saglabāt izmaiņas": "Save Changes",
+    "Tavi pieteiktie treniņi": "Your Booked Workouts",
+    "Šeit tu vai pārskatīt savu treniņu grafiku un atteikties, ja plāni mainījušies.": "Here you can review your workout schedule and cancel if your plans have changed.",
+    "Tu vēl neesi pieteicies nevienu treniņam.": "You haven't signed up for any workouts yet.",
+    "Atteikties": "Cancel Booking",
+    "Rezervācija veiksmīgi atcelta.": "Booking successfully cancelled."
 }
