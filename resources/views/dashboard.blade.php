@@ -12,10 +12,10 @@
                 <form action="{{ route('dashboard') }}" method="GET" class="flex flex-col sm:flex-row items-end gap-4">
                     <div class="flex-1 w-full">
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                            Meklēt pēc sporta veida
+                            {{ __('Meklēt pēc sporta veida') }}
                         </label>
                         <select name="sport_type" class="w-full bg-slate-50 border border-gray-200  px-4 py-3 text-sm font-medium text-gray-700 focus:border-emerald-500 focus:ring-emerald-500 transition shadow-inner">
-                            <option value="">Visi sporta veidi</option>
+                            <option value="">{{ __('Visi sporta veidi') }}</option>
                             @foreach($sportTypes as $type)
                                 <option value="{{ $type->Sporta_veida_id }}" {{ request('sport_type') == $type->Sporta_veida_id ? 'selected' : '' }}>
                                 {{ $type->Nosaukums }}
@@ -25,7 +25,7 @@
                     </div>
                     <div class="w-full sm:w-auto">
                         <button type="submit" class="w-full px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider  shadow-sm transition active:scale-95 cursor-pointer">
-                            Filtrēt
+                            {{ __('Filtrēt') }}
                         </button>
                     </div>
                 </form>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="mt-6">
                             <a href="{{ route('trainer.show', $trainer->Lietotāja_id) }}" class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition active:scale-95 text-center cursor-pointer">
-                                Skatīt profilu
+                                {{ __('Skatīt profilu') }}
                             </a>
                         </div>
                     </div>
