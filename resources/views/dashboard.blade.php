@@ -41,8 +41,8 @@
                             <h4 class="text-lg font-bold text-gray-900 mb-1">
                                 {{ $trainer->Vārds }} {{ $trainer->Uzvārds }}
                             </h4>
-                            <p class="text-gray-600 text-xs mt-2">
-                                {{ $trainer->Bio ?? 'Sveiki! Esmu profesionāls sporta treneris.' }}
+                            <p class="text-gray-600 text-xs mt-2 line-clamp-2">
+                                {{ $trainer->Kvalifikācija ?? __('Šis treneris vēl nav pievienojis savu kvalifikācijas aprakstu.') }}
                             </p>
                         </div>
                         <div class="mt-6">

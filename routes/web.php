@@ -5,6 +5,7 @@ use App\Http\Controllers\Coach\SessionController;
 use App\Http\Controllers\Client\CoachController;
 use App\Http\Controllers\Client\BookingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Coach\TrainerProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,10 @@ Route::middleware(['auth', 'coach'])->group(function () {
 
     // Sesiju dzēšana (Delete)
     Route::delete('/coach/sessions/{id}', [SessionController::class, 'destroy'])->name('sessions.destroy');
+
+    // Trenera profila rediģēšanas maršruti
+    Route::get('/coach/profile/edit', [TrainerProfileController::class, 'edit'])->name('coach.profile.edit');
+    Route::put('/coach/profile/update', [TrainerProfileController::class, 'update'])->name('coach.profile.update');
 });
 
 

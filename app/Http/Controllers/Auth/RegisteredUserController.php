@@ -33,6 +33,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
         'name' => ['required', 'string', 'max:50'], // Šeit mēs izmantojam 'name' kā vārdu pagaidām
+        'surname' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:100', 'unique:'.User::class.',Epasts'],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
         'role' => ['required', 'string', 'in:client,coach'],
@@ -43,7 +44,7 @@ class RegisteredUserController extends Controller
         // 1. Izveidojam pamata lietotāju
         $user = User::create([
             'Vārds' => $request->name,
-            'Uzvārds' => 'Uzvārds', // Pagaidām ieliekam default, vēlāk pielāgosim formu
+            'Uzvārds' => $request->surname, // Pagaidām ieliekam default, vēlāk pielāgosim formu
             'Epasts' => $request->email,
             'password' => Hash::make($request->password),
         ]);

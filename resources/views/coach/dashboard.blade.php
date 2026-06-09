@@ -14,25 +14,25 @@
                 </div>
             @endif
 
-            <div class="bg-white border border-gray-100 overflow-hidden shadow-sm p-8 rounded-2xl">
+            <div class="bg-white border border-gray-100 overflow-hidden shadow-sm p-8 ">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-6 mb-6">
                     <div>
                         <h3 class="text-xl font-bold text-gray-900">{{ __('Tavas plānotās treniņu sesijas') }}</h3>
                         <p class="text-sm text-gray-500 mt-1">{{ __('Pārvaldi un veido jaunus treniņus saviem klientiem') }}</p>
                     </div>
                     
-                    <a href="{{ route('coach.sessions.create') }}" class="mt-4 sm:mt-0 inline-flex items-center px-5 py-2.5 bg-emerald-600 border border-transparent font-semibold text-sm text-white tracking-wide hover:bg-emerald-700 focus:bg-emerald-700 active:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-sm rounded-xl">
+                    <a href="{{ route('coach.sessions.create') }}" class="mt-4 sm:mt-0 inline-flex items-center px-5 py-2.5 bg-emerald-600 border border-transparent font-semibold text-sm text-white tracking-wide hover:bg-emerald-700 focus:bg-emerald-700 active:bg-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150 shadow-sm ">
                         {{ __('+ Izveidot jaunu sesiju') }}
                     </a>
                 </div>
 
                 @if($sessions->isEmpty())
-                    <div class="text-center py-12 bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl">
+                    <div class="text-center py-12 bg-gray-50 border-2 border-dashed border-gray-200 ">
                         <p class="text-base font-medium text-gray-600">{{ __('Tu vēl neesi izveidojis nevienu treniņu sesiju.') }}</p>
                         <p class="text-xs text-gray-400 mt-1">{{ __('Izmanto pogu augšā, lai pievienotu pirmo sesiju.') }}</p>
                     </div>
                 @else
-                    <div class="w-full max-w-full bg-white border border-gray-200 shadow-sm overflow-x-auto rounded-xl">
+                    <div class="w-full max-w-full bg-white border border-gray-200 shadow-sm overflow-x-auto ">
                         <table class="w-full min-w-full divide-y divide-gray-200 text-sm">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -51,7 +51,7 @@
                                             {{ $session->Nosaukums ?? $session->Sporta_veids ?? $session->SportaVeids }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full {{ ($session->Tips === 'Individuālais' || $session->Tips === 'Individuāls') ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700' }}">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium  {{ ($session->Tips === 'Individuālais' || $session->Tips === 'Individuāls') ? 'bg-blue-50 text-blue-700' : 'bg-purple-50 text-purple-700' }}">
                                                 {{ __($session->Tips) }}
                                             </span>
                                         </td>

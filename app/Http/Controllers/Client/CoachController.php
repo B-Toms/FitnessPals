@@ -16,10 +16,18 @@ class CoachController extends Controller
         // 1. Paņemam visus sporta veidus dropdown izvēlnei
         $sportTypes = DB::table('sport_types')->get();
 
-        // 2. Atlasām tikai tos lietotājus no 'users' tabulas, kuri ir ierakstīti 'sessions' tabulā kā treneri
+        // 2. Atlasām lietotājus, kuriem ir sesijas, un PIEVIENOJAM datus no 'coaches' tabulas
         $query = DB::table('users')
             ->join('sessions', 'users.Lietotāja_id', '=', 'sessions.Trenera_id')
-            ->select('users.Lietotāja_id', 'users.Vārds', 'users.Uzvārds', 'users.Bio')
+            ->leftJoin('coaches', 'users.Lietotāja_id', '=', 'coaches.Lietotāja_id') // PIELIKTS KLĀT
+            ->select(
+                'users.Lietotāja_id', 
+                'users.Vārds', 
+                'users.Uzvārds', 
+                'users.Bio', 
+                'coaches.Kvalifikācija',       // PIELIKTS KLĀT
+                'coaches.Sertifikācijas_dati'  // PIELIKTS KLĀT
+            )
             ->distinct();
 
         // 3. Ja klients ir izvēlējies konkrētu sporta veidu, filtrējam sesijas pēc tā
@@ -38,8 +46,12 @@ class CoachController extends Controller
      */
     public function show($id)
     {
-        // 1. Atrodam treneri pēc viņa ID
-        $trainer = DB::table('users')->where('Lietotāja_id', $id)->first();
+        // 1. Atrodam treneri un PIEVIENOJAM viņa kvalifikāciju un sertifikātus
+        $trainer = DB::table('users')
+            ->leftJoin('coaches', 'users.Lietotāja_id', '=', 'coaches.Lietotāja_id') // PIELIKTS KLĀT
+            ->where('users.Lietotāja_id', $id)
+            ->select('users.*', 'coaches.Kvalifikācija', 'coaches.Sertifikācijas_dati') // PIELIKTS KLĀT
+            ->first();
 
         if (!$trainer) {
             abort(404, 'Treneris netika atrasts!');
