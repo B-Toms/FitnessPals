@@ -18,6 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $table = 'users';
+    
+    // Pasakām Laravel, ka mūsu unikālais ID ir latviski
     protected $primaryKey = 'Lietotāja_id';
 
     protected $fillable = [
@@ -25,6 +27,7 @@ class User extends Authenticatable
         'Uzvārds',
         'Epasts',
         'password',
+        'loma',
     ];
 
     /**
@@ -46,24 +49,37 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function getAuthIdentifierName()
-    {
-        return 'Epasts';
-    }
+
     /**
-    * Pārbauda, vai lietotājs ir klients
-    */
-    public function isClient(): bool{
+     * Pārbauda, vai lietotājs ir klients
+     */
+    public function isClient(): bool
+    {
         return \Illuminate\Support\Facades\DB::table('clients')
-            ->where('Lietotāja_id',$this->Lietotāja_id)
+            ->where('Lietotāja_id', $this->Lietotāja_id)
             ->exists();
     }
+
     /**
-    * Pārbauda, vai lietotājs ir treneris
-    */
-    public function isCoach(): bool {
+     * Pārbauda, vai lietotājs ir treneris
+     */
+    public function isCoach(): bool 
+    {
         return \Illuminate\Support\Facades\DB::table('coaches')
             ->where('Lietotāja_id', $this->Lietotāja_id)
             ->exists();
     }
+    /**
+ * Norāda Laravel, kura kolonna tiek izmantota kā lietotājvārds autorizācijai.
+ */
+public function getAuthIdentifierName()
+{
+    return 'Lietotāja_id'; // Šim ir jābūt ID
+}
+
+// Šī ir tā funkcija, kas nosaka, kuru lauku izmantot kā e-pastu/username!
+public function getEmailForPasswordReset()
+{
+    return $this->Epasts;
+}
 }

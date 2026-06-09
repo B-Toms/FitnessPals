@@ -47,6 +47,7 @@ class RegisteredUserController extends Controller
             'Uzvārds' => $request->surname, // Pagaidām ieliekam default, vēlāk pielāgosim formu
             'Epasts' => $request->email,
             'password' => Hash::make($request->password),
+            'loma' => $request->role,
         ]);
 
         // 2. Atkarībā no lomas, ierakstām datus saistītajā tabulā

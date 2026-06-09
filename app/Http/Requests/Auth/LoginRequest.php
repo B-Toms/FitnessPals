@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -41,7 +41,14 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['Epasts' => $this->email, 'password' => $this->password], $this->boolean('remember'))) {
+        // Veicam ielogošanos, salīdzinot formu ar DB kolonnu 'Epasts'
+        $loggedIn = Auth::attempt([
+            'Epasts' => $this->email,
+            'password' => $this->password
+        ], $this->boolean('remember'));
+
+        // Ja ielogošanās NAV veiksmīga, reģistrējam mēģinājumu un metam kļūdu
+        if (! $loggedIn) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -49,6 +56,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Ja viss kārtībā, notīrām bloķētāja skaitītāju
         RateLimiter::clear($this->throttleKey());
     }
 
