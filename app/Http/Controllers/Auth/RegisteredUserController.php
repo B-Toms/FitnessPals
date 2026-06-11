@@ -32,7 +32,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-        'name' => ['required', 'string', 'max:50'], // Šeit mēs izmantojam 'name' kā vārdu pagaidām
+        'name' => ['required', 'string', 'max:50'],
         'surname' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:100', 'unique:'.User::class.',Epasts'],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
         // 1. Izveidojam pamata lietotāju
         $user = User::create([
             'Vārds' => $request->name,
-            'Uzvārds' => $request->surname, // Pagaidām ieliekam default, vēlāk pielāgosim formu
+            'Uzvārds' => $request->surname, 
             'Epasts' => $request->email,
             'password' => Hash::make($request->password),
             'loma' => $request->role,
@@ -53,7 +53,7 @@ class RegisteredUserController extends Controller
         // 2. Atkarībā no lomas, ierakstām datus saistītajā tabulā
         if ($request->role === 'client') {
             DB::table('clients')->insert([
-                'Lietotāja_id' => $user->Lietotāja_id, // Izmantojam mūsu pielāgoto PK lauku
+                'Lietotāja_id' => $user->Lietotāja_id, 
                 'Telefona_numurs' => '-',
                 'Sagatavotibas_līmenis' => 'Iesācējs',
                 'created_at' => now(),

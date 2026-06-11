@@ -25,11 +25,11 @@ class SessionController extends Controller
         return view('coach.dashboard', compact('sessions'));
     }
     public function create(){
-        // Paņemam visus sporta veidus no datubāzes, lai treneris varētu izvēlēties izkrītošajā izvēlnē
+        // Paņemam visus sporta veidus no datubāzes, lai treneris varētu izvēlēties dropdown izvēlnē
         $sportTypes = DB::table('sport_types')->get();
         return view('coach.create_session',compact('sportTypes'));
     }
-
+    
     /**
      * Saglabā jauno treniņu datubāzē
      */
@@ -90,7 +90,7 @@ class SessionController extends Controller
             return redirect()->route('coach.dashboard')->with('error', 'Sesija netika atrasta!');
         }
 
-        // 2. Atlasām visus sporta veidus no TAVAS ĪSTĀS tabulas 'sport_types'
+        // 2. Atlasām visus sporta veidus no tabulas
         $sports = \Illuminate\Support\Facades\DB::table('sport_types')->get();
 
         // 3. Padodam abus mainīgos uz skatu
@@ -110,8 +110,7 @@ class SessionController extends Controller
             'Ilgums'                 => 'required|integer',
             'Max_dalibnieku_skaits'  => 'required|integer|min:0',
         ]);
-
-        // 2. Ierakstām datus datubāzē precīzajās kolonnās pēc DESCRIBE struktūras
+        
         \Illuminate\Support\Facades\DB::table('sessions')
             ->where('Sesijas_id', $id)
             ->update([

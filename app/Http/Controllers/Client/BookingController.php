@@ -21,7 +21,7 @@ class BookingController extends Controller
             ->join('sport_types', 'sessions.Sporta_veida_id', '=', 'sport_types.Sporta_veida_id')
             ->where('bookings.Klienta_id', $userId)
             ->select(
-                'bookings.Rezervācijas_id as id', // SALABOTS: 'ā' burts ar garumzīmi!
+                'bookings.Rezervācijas_id as id', 
                 'sport_types.Nosaukums as sporta_veids',
                 'sessions.Tips',
                 'sessions.Datums',

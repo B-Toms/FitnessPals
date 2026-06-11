@@ -4,7 +4,7 @@
             {{ __('Atrodi savu treneri') }}
         </h2>
     </x-slot>
-
+S
     <div class="py-12 bg-slate-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 

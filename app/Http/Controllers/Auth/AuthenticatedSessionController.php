@@ -29,7 +29,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Pasakām VS Code, ka šis ir mūsu User modelis
         /** @var \App\Models\User $user */
         $user = auth()->user();
         if($user->isCoach()){

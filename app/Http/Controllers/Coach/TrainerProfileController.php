@@ -17,7 +17,7 @@ class TrainerProfileController extends Controller
         $userId = Auth::user()->Lietotāja_id;
 
         // Atrodam trenera specifiskos datus pēc Lietotāja_id
-        $coachData = DB::table('coaches') // Pārliecinies, vai DB tabula saucas 'treners' vai 'coaches'
+        $coachData = DB::table('coaches') 
             ->where('Lietotāja_id', $userId)
             ->first();
 

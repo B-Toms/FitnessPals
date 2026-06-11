@@ -27,7 +27,7 @@
 
             <div class="bg-white border border-gray-200 shadow-sm p-6 mb-8 flex flex-col md:flex-row gap-6 items-center md:items-start">
                 <div class="w-32 h-32 bg-slate-100 border border-gray-200 flex items-center justify-center text-4xl shadow-inner shrink-0">
-                     👤
+                    👤
                 </div>
                 <div class="flex-1 text-center md:text-left">
                     <h1 class="text-2xl font-extrabold text-gray-900 mb-2">{{ $trainer->Vārds }} {{ $trainer->Uzvārds }}</h1>

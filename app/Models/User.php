@@ -19,7 +19,6 @@ class User extends Authenticatable
      */
     protected $table = 'users';
     
-    // Pasakām Laravel, ka mūsu unikālais ID ir latviski
     protected $primaryKey = 'Lietotāja_id';
 
     protected $fillable = [
@@ -65,7 +64,7 @@ class User extends Authenticatable
      */
     public function isCoach(): bool 
     {
-        return \Illuminate\Support\Facades\DB::table('coaches')
+        return \Illuminate\Support\Facades\DB::table('coaches') //Ļauj php piekļūt db
             ->where('Lietotāja_id', $this->Lietotāja_id)
             ->exists();
     }

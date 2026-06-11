@@ -67,9 +67,10 @@
                                             <a href="{{ route('sessions.edit', $session->Sesijas_id) }}" class="text-xs font-bold text-emerald-600 hover:text-emerald-800 uppercase tracking-wider transition mr-4 inline-block">
                                                 {{ __('Labot') }}
                                             </a>
-                                            <form action="{{ route('sessions.destroy', $session->Sesijas_id) }}" method="POST" onsubmit="return confirm('Vai tiešām vēlies dzēst šo sesiju un visas tās rezervācijas?');" class="inline-block m-0">                                                @method('DELETE')
-                                                <button type="submit" class="text-xs font-bold text-rose-600 hover:text-rose-800 uppercase tracking-wider cursor-pointer transition bg-transparent border-0 p-0">
-                                                    {{ __('Dzēst') }}
+                                            <form action="{{ route('sessions.destroy', $session->Sesijas_id) }}" method="POST" onsubmit="return confirm('Vai tiešām vēlies dzēst šo sesiju un visas tās rezervācijas?');" class="inline-block m-0">
+                                                @csrf
+                                                @method('DELETE')<button type="submit" class="text-xs font-bold text-rose-600 hover:text-rose-800 uppercase tracking-wider cursor-pointer transition bg-transparent border-0 p-0">
+                                                {{ __('Dzēst') }}
                                                 </button>
                                             </form>
                                         </td>
